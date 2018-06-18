@@ -43,7 +43,7 @@ db.once('open', function(){
 
 //routes!
 
-app.get('view/home', function (req, res){
+app.get('/home', function (req, res){
     Article.find({'saved': false}, function(error, data){
         var hbsObject = {
             article: data
@@ -65,7 +65,7 @@ app.get('/saved', function(req, res){
 //scraping!
 app.get('/scrape', function (req, res) {
     request("https://www.nytimes.com/section/your-money", function(error, response, html){
-        var $ = cherrio.load(html);
+        var $ = cheerio.load(html);
         $('article').each(function(i, element){
             var result = {};
             result.title = $(this).children('h2').text();

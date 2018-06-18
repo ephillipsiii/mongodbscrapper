@@ -1,6 +1,6 @@
 //dependencies
 var mongoose = require("mongoose");
-var Note = require("/note");
+// var Note = require("./Note");
 //schema class
 var Schema = mongoose.Schema;
 //article schema
@@ -22,7 +22,7 @@ var ArticleSchema= new Schema({
         default: false
     },
     notes: [{
-        type: Schema.Types.ObjectID,
+        type: Schema.Types.ObjectId,
         ref: "Note"
     }]
 });

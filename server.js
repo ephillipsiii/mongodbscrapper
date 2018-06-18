@@ -4,12 +4,12 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var path = require('path');
-var Note = require('./models/note.js');
-var article = require('./models/article.js');
+var Note = require('./models/Note');
+var Article = require('./models/Article');
 var request = require('request');
 var cheerio = require('cheerio');
 
-mongoose.Promis = Promise;
+mongoose.Promise = Promise;
 
 var port = process.env.PORT || 3000
 
@@ -26,11 +26,11 @@ var exphbs = require('express-handlebars');
 
 app.engine('handlebars', exphbs({
     defaultLayout: 'main',
-    layoutsDir: path.join(_dirname, "/view/layouts")
+    layoutsDir: path.join(__dirname, "/view/layouts")
 }));
 app.set('view engine', 'handlebars');
 
-mongoose.connect()
+mongoose.connect('mongodb://localhost/mongoscraper');
 var db = mongoose.connection;
 
 db.on('error', function(error) {
@@ -43,8 +43,8 @@ db.once('open', function(){
 
 //routes!
 
-app.get('/', function (req, res){
-    article.find({'saved': false}, function(error, data){
+app.get('view/home', function (req, res){
+    Article.find({'saved': false}, function(error, data){
         var hbsObject = {
             article: data
         };
@@ -54,7 +54,7 @@ app.get('/', function (req, res){
 });
 
 app.get('/saved', function(req, res){
-    article.find({'saved': true}).populate('notes').exec(function(error, articles){
+    Article.find({'saved': true}).populate('notes').exec(function(error, articles){
         var hbsObject = {
             article: articles
         };
@@ -89,7 +89,7 @@ app.get('/scrape', function (req, res) {
 
 //getting scraped articles
 app.get('/articles', function(req, res){
-    article.find({}, function(error, doc){
+    Article.find({}, function(error, doc){
         if (error){
             console.log(error);
         }
@@ -101,7 +101,7 @@ app.get('/articles', function(req, res){
 
 //grabbin article by ObjectId
 app.get('/articles/:id', function(req, res){
-    article.findOne({ '_id': req.params.id})
+    Article.findOne({ '_id': req.params.id})
     .populate('note')
     .exec(function(error, doc){
         if(error){
@@ -115,7 +115,7 @@ app.get('/articles/:id', function(req, res){
 
 //saving article
 app.post('/articles/save/:id', function(req, res){
-    article.findOneAndUpdate({'_id': req.params.id}, {'saved': true})
+    Article.findOneAndUpdate({'_id': req.params.id}, {'saved': true})
     .exec(function(err, doc){
         if (err){
             console.log(err);
@@ -129,7 +129,7 @@ app.post('/articles/save/:id', function(req, res){
 //deleting an article
 
 app.post('/articles/delete/:id', function(req, res){
-    article.findOneAndUpdate({'_id': req.params.id}, {'saved': false, 'notes': []})
+    Article.findOneAndUpdate({'_id': req.params.id}, {'saved': false, 'notes': []})
     .exec(function(err, doc){
         if(err){
             console.log(err);
@@ -152,7 +152,7 @@ app.post('/notes/save/:id', function(req, res){
             console.log(error)
         }
         else{
-            article.findOneAndUpdate({'_id': req.params.id}, {$push: {'notes': note}})
+            Article.findOneAndUpdate({'_id': req.params.id}, {$push: {'notes': note}})
             .exec(function(err){
                 if(err){
                     console.log(err);
@@ -190,5 +190,5 @@ app.delete('/notes/delete/:note_id/:article_id', function(req, res){
 
 //set that server!
 app.listen(port, function(){
-    console.log('App running on port ' + PORT);
+    console.log('App running on port ' + port);
 })

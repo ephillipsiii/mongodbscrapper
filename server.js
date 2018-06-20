@@ -72,7 +72,7 @@ app.get('/scrape', function (req, res) {
             result.summary = $(this).children('.summary').text();
             result.link = $(this).children('h2').children('a').attr('href');
 
-            var entry = new article(result);
+            var entry = new Article(result);
 
             entry.save(function(err, doc){
                 if (err){
@@ -83,6 +83,7 @@ app.get('/scrape', function (req, res) {
                 }
             });
         });
+        
         res.send("Scrape Finished!");
     });
 });

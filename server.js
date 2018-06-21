@@ -49,7 +49,7 @@ app.get('/', function (req, res){
             article: data
         };
         console.log(hbsObject);
-        res.render('home', hbsObject);
+        res.render('/', hbsObject);
     });
 });
 

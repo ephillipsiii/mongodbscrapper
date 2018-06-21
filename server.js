@@ -4,8 +4,8 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var path = require('path');
-var Note = require('./models/Note');
-var Article = require('./models/Article');
+var Note = require('./models/Note.js');
+var Article = require('./models/Article.js');
 var request = require('request');
 var cheerio = require('cheerio');
 
@@ -43,7 +43,7 @@ db.once('open', function(){
 
 //routes!
 
-app.get('/home', function (req, res){
+app.get('/', function (req, res){
     Article.find({'saved': false}, function(error, data){
         var hbsObject = {
             article: data
@@ -144,7 +144,7 @@ app.post('/articles/delete/:id', function(req, res){
 //making a n3ew note
 app.post('/notes/save/:id', function(req, res){
     var newNote = new Note({
-        boduy: req.body.text,
+        body: req.body.text,
         article: req.params.id
     });
     console.log(req.body)

@@ -1,6 +1,6 @@
 //dependencies
 var mongoose = require("mongoose");
-// var Note = require("./Note");
+var Note = require("./Note");
 //schema class
 var Schema = mongoose.Schema;
 //article schema

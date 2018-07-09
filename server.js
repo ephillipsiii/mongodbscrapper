@@ -49,22 +49,22 @@ app.get('/', function (req, res){
             article: data
         };
         console.log(hbsObject);
-        res.render('/', hbsObject);
+        res.render('home', hbsObject);
     });
 });
 
-app.get('/saved', function(req, res){
-    Article.find({'saved': true}).populate('notes').exec(function(error, articles){
+app.get('/savedArticles', function(req, res){
+    Article.find({'savedArticles': true}).populate('notes').exec(function(error, articles){
         var hbsObject = {
             article: articles
         };
-        res.render('saved', hbsObject);
+        res.render('savedArticles', hbsObject);
     });
 });
 
 //scraping!
 app.get('/scrape', function (req, res) {
-    request("https://www.nytimes.com/section/your-money", function(error, response, html){
+    request("https://www.nytimes.com/", function(error, response, html){
         var $ = cheerio.load(html);
         $('article').each(function(i, element){
             var result = {};

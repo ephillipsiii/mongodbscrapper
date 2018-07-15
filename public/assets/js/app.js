@@ -32,7 +32,7 @@ $(".delete").on("click", function(){
         method: "POST",
         url: "/articles/delete/" + thisId
     }).done(function(data){
-        window.location = "/saved"
+        window.location = "/savedArticles"
     })
 });
 //save not button
@@ -51,7 +51,7 @@ $(".saveNote").on("click", function(){
             console.log(data);
             $("#noteText" + thisId).val("");
             $(".noteModal").modal("hide");
-            window.location = "/saved";
+            window.location = "/savedArticles";
         })
     }
 });
@@ -65,6 +65,6 @@ $(".deleteNote").on("click", function(){
     }).done(function(data){
         console.log(data)
         $(".noteModal").modal("hide");
-        window.location = "/saved"
+        window.location = "/savedArticles"
     })
 });

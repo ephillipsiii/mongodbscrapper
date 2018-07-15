@@ -131,7 +131,7 @@ app.post('/articles/save/:id', function(req, res){
 //deleting an article
 
 app.post('/articles/delete/:id', function(req, res){
-    Article.findOneAndUpdate({'_id': req.params.id}, {'saved': false, 'notes': []})
+    Article.findOneAndUpdate({_id: req.params.id}, {'saved': false, 'notes': []})
     .exec(function(err, doc){
         if(err){
             console.log(err);

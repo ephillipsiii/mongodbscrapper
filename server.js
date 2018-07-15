@@ -54,7 +54,7 @@ app.get('/', function (req, res){
 });
 
 app.get('/savedArticles', function(req, res){
-    Article.find({'savedArticles': true}).populate('notes').exec(function(error, articles){
+    Article.find({'saved': true}).populate('notes').exec(function(error, articles){
         var hbsObject = {
             article: articles
         };
@@ -102,7 +102,7 @@ app.get('/articles', function(req, res){
 
 //grabbin article by ObjectId
 app.get('/articles/:id', function(req, res){
-    Article.findOne({ '_id': req.params.id})
+    Article.findOne({ _id: req.params.id})
     .populate('note')
     .exec(function(error, doc){
         if(error){
@@ -116,12 +116,13 @@ app.get('/articles/:id', function(req, res){
 
 //saving article
 app.post('/articles/save/:id', function(req, res){
-    Article.findOneAndUpdate({'_id': req.params.id}, {'saved': true})
+    Article.findOneAndUpdate({_id: req.params.id}, {'saved': true})
     .exec(function(err, doc){
         if (err){
             console.log(err);
         }
         else {
+            console.log("article saved");
             res.send(doc);
         }
     });

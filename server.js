@@ -154,7 +154,7 @@ app.post('/notes/save/:id', function(req, res){
             console.log(error)
         }
         else{
-            Article.findOneAndUpdate({'_id': req.params.id}, {$push: {'notes': note}})
+            Article.findOneAndUpdate({_id: req.params.id}, {$push: {'notes': note}})
             .exec(function(err){
                 if(err){
                     console.log(err);

@@ -36,11 +36,14 @@ $(".delete").on("click", function(){
     })
 });
 //save not button
-$(".saveNote").on("click", function(){
+$(".addNote").on("click", function(){
     var thisId = $(this).attr("data-id");
-    if(!$("#noteText" + thisId).val()) {
-        alert("Enter a note to save")
-    }else {
+    // if(!$("#noteText" + thisId).val()) {
+    //     alert("Enter a note to save")
+        
+
+    // }else {
+        
         $.ajax({
             method: "POST",
             url: "/notes/save/" + thisId,
@@ -50,11 +53,11 @@ $(".saveNote").on("click", function(){
         }).done(function(data) {
             console.log(data);
             $("#noteText" + thisId).val("");
-            $(".noteModal").modal("hide");
+            $(".modalNote").modal("hide");
             window.location = "/savedArticles";
         })
-    }
-});
+    })
+;
 //delete not button
 $(".deleteNote").on("click", function(){
     var noteId = $(this).attr("data-note-id");

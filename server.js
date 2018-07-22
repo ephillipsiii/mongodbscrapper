@@ -31,8 +31,11 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 // mongoose.connect('mongodb://localhost/mongoscraper');
-mongoose.connect('mongodb://nytimescrapper:a11111@ds245901.mlab.com:45901/nytimesscrapper')
-var db = mongoose.connection;
+// mongoose.connect('mongodb://nytimescrapper:a11111@ds245901.mlab.com:45901/nytimesscrapper')
+// var db = mongoose.connection;
+var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoscraper';
+mongoose.Promise = Promise;
+mongoose.connection(MONGODB_URI);
 
 db.on('error', function(error) {
     console.log("Mongoose Error: ", error);

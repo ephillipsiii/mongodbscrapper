@@ -30,7 +30,8 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
-mongoose.connect('mongodb://localhost/mongoscraper');
+// mongoose.connect('mongodb://localhost/mongoscraper');
+mongoose.connect('mongodb://nytimescrapper:a11111@ds245901.mlab.com:45901/nytimesscrapper')
 var db = mongoose.connection;
 
 db.on('error', function(error) {

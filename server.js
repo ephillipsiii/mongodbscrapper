@@ -5,7 +5,7 @@ var logger = require('morgan');
 var mongoose = require('mongoose');
 var path = require('path');
 var Note = require('./models/note.js');
-var Article = require('./models/Article.js');
+var Article = require('./models/article.js');
 var request = require('request');
 var cheerio = require('cheerio');
 
